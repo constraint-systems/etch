@@ -143,6 +143,9 @@ const Home = () => {
   return (
     <ThemeProvider theme={theme}>
       <div>
+        <Head>
+          <title>Etch</title>
+        </Head>
         <style jsx global>{`
           * {
             box-sizing: border-box;
@@ -150,7 +153,7 @@ const Home = () => {
           html {
             font-family: ${theme.fonts.body};
             font-size: ${theme.fontSizes[0]}px;
-            background: ${theme.colors.background};
+            background: white;
             line-height: ${theme.lineHeights.body};
           }
           body {
@@ -165,10 +168,6 @@ const Home = () => {
             margin: 0;
           }
         `}</style>
-
-        <Head>
-          <title>Etch</title>
-        </Head>
         <canvas
           ref={canvasRef}
           sx={{ background: 'white' }}
@@ -199,12 +198,14 @@ const Home = () => {
             position: 'fixed',
             right: size * 2,
             bottom: size * 2,
+            maxWidth: `calc(100% - ${size * 4}px)`,
             padding: size,
             fontSize: size,
             lineHeight: 1.5,
-            background: 'white',
+            background: 'rgba(255,255,255,0.8)',
             borderRadius: 4,
-            boxShadow: '2px 1px 14px rgba(0,0,0,0.3)',
+            border: 'solid 1px black',
+            // boxShadow: '2px 1px 14px rgba(0,0,0,0.3)',
           }}
         >
           <div style={{ marginBottom: size * 1.5 }}>
@@ -226,17 +227,11 @@ const Home = () => {
             </p>
           </div>
 
-          <div style={{ marginBottom: size * 1.5 }}>
+          <div style={{ marginBottom: 0 }}>
             <p style={{ marginBottom: 0 }}>Special</p>
             <p>
-              <KeyTip>x</KeyTip> clear&nbsp; <KeyTip>s</KeyTip> save as png
-            </p>
-          </div>
-
-          <div style={{ marginBottom: 0 }}>
-            <p>Help</p>
-            <p>
-              <KeyTip>?</KeyTip> toggle instructions
+              <KeyTip>x</KeyTip> clear&nbsp; <KeyTip>s</KeyTip> save as
+              png&nbsp; <KeyTip>?</KeyTip> toggle instructions
             </p>
           </div>
         </div>

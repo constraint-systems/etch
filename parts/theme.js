@@ -4,7 +4,7 @@ let lx = font_size * line_height;
 
 export default {
   fonts: {
-    body: 'IBM Plex Mono',
+    body: 'monospace',
   },
   fontSizes: [font_size],
   lineHeights: {
