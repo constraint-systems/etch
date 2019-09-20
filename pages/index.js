@@ -263,7 +263,14 @@ const Home = () => {
             </div>
           </div>
         ) : (
-          <div css={{ position: 'fixed', right: size * 2, bottom: size * 2 }}>
+          <div
+            css={{
+              position: 'fixed',
+              right: size * 2,
+              bottom: size * 2,
+              background: 'rgba(255,255,255,0.8)',
+            }}
+          >
             {KeyTip('?')}
           </div>
         )}
