@@ -14,18 +14,6 @@ let special_keys = 'xs?'.split('');
 Object.fromEntries = arr =>
   Object.assign({}, ...Array.from(arr, ([k, v]) => ({ [k]: v })));
 
-let KeyTip = props => (
-  <span
-    sx={{
-      border: 'solid 1px black',
-      width: '2ch',
-      textAlign: 'center',
-      display: 'inline-block',
-    }}
-  >
-    {props.children}
-  </span>
-);
 const Home = () => {
   let [dimensions, setDimensions] = useState([null, null]);
   let canvasRef = useRef();
@@ -34,6 +22,28 @@ const Home = () => {
   let keymap = useRef({});
   let coordinates = useRef([0, 0]);
   let [help, toggleHelp] = useState(true);
+
+  function KeyTip(letter) {
+    return (
+      <span
+        onClick={() => {
+          keymap.current[letter] = true;
+          keyAction(letter, false);
+          keymap.current[letter] = false;
+        }}
+        sx={{
+          border: 'solid 1px black',
+          width: '2ch',
+          textAlign: 'center',
+          display: 'inline-block',
+          userSelect: 'none',
+          cursor: 'default',
+        }}
+      >
+        {letter}
+      </span>
+    );
+  }
 
   function keyAction(key, repeat) {
     let canvas_width = Math.floor(window.innerWidth / size) * size;
@@ -192,49 +202,71 @@ const Home = () => {
             display: dimensions[0] !== null ? 'block' : 'none',
           }}
         />
-        <div
-          css={{
-            display: help ? 'block' : 'none',
-            position: 'fixed',
-            right: size * 2,
-            bottom: size * 2,
-            maxWidth: `calc(100% - ${size * 4}px)`,
-            padding: size,
-            fontSize: size,
-            lineHeight: 1.5,
-            background: 'rgba(255,255,255,0.8)',
-            borderRadius: 4,
-            border: 'solid 1px black',
-            // boxShadow: '2px 1px 14px rgba(0,0,0,0.3)',
-          }}
-        >
-          <div style={{ marginBottom: size * 1.5 }}>
-            <p>Etch is a keyboard-based drawing tool.</p>
-          </div>
+        {help ? (
+          <div
+            css={{
+              position: 'fixed',
+              right: size * 2,
+              bottom: size * 2,
+              maxWidth: `calc(100% - ${size * 4}px)`,
+              padding: size,
+              fontSize: size,
+              lineHeight: 1.5,
+              background: 'rgba(255,255,255,0.8)',
+              borderRadius: 4,
+              border: 'solid 1px black',
+              // boxShadow: '2px 1px 14px rgba(0,0,0,0.3)',
+            }}
+          >
+            <div style={{ marginBottom: size * 1.5 }}>
+              <p>Etch is a keyboard-based drawing tool.</p>
+            </div>
 
-          <div style={{ marginBottom: size * 1.5 }}>
-            <p>Movement</p>
-            <p>
-              <KeyTip>h</KeyTip> ←&nbsp; <KeyTip>j</KeyTip> ↓&nbsp;{' '}
-              <KeyTip>k</KeyTip> ↑&nbsp; <KeyTip>l</KeyTip> →
-            </p>
-          </div>
+            <div style={{ marginBottom: size * 1.5 }}>
+              <p>Movement</p>
+              <p>
+                {KeyTip('h')} ←&nbsp; {KeyTip('j')} ↓&nbsp; {KeyTip('k')}{' '}
+                ↑&nbsp; {KeyTip('l')} →
+              </p>
+            </div>
 
-          <div style={{ marginBottom: size * 1.5 }}>
-            <p>Drawing</p>
-            <p>
-              <KeyTip>d</KeyTip> draw&nbsp; <KeyTip>e</KeyTip> erase
-            </p>
-          </div>
+            <div style={{ marginBottom: size * 1.5 }}>
+              <p>Drawing</p>
+              <p>
+                {KeyTip('d')} draw&nbsp; {KeyTip('e')} erase
+              </p>
+            </div>
 
-          <div style={{ marginBottom: 0 }}>
-            <p style={{ marginBottom: 0 }}>Special</p>
-            <p>
-              <KeyTip>x</KeyTip> clear&nbsp; <KeyTip>s</KeyTip> save as
-              png&nbsp; <KeyTip>?</KeyTip> toggle instructions
-            </p>
+            <div style={{ marginBottom: size * 1.5 }}>
+              <p style={{ marginBottom: 0 }}>Special</p>
+              <p>
+                {KeyTip('s')} save as png&nbsp; {KeyTip('x')} clear&nbsp;{' '}
+                {KeyTip('?')} show help
+              </p>
+            </div>
+
+            <div style={{ marginBottom: 0 }}>
+              <a
+                href="https://github.com/ConstraintSystems/Etch"
+                target="_blank"
+              >
+                View source↗
+              </a>
+              . Inspired by{' '}
+              <a
+                href="https://github.com/hundredrabbits/noodle"
+                target="_blank"
+              >
+                Hundred Rabbits' Noodle↗
+              </a>
+              .
+            </div>
           </div>
-        </div>
+        ) : (
+          <div css={{ position: 'fixed', right: size * 2, bottom: size * 2 }}>
+            {KeyTip('?')}
+          </div>
+        )}
       </div>
     </ThemeProvider>
   );
