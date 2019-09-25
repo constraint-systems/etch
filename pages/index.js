@@ -247,7 +247,7 @@ const Home = () => {
 
             <div style={{ marginBottom: 0 }}>
               <a
-                href="https://github.com/ConstraintSystems/Etch"
+                href="https://github.com/constraint-systems/etch"
                 target="_blank"
               >
                 View source↗
